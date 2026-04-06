@@ -25,6 +25,9 @@ spring:
     hikari:
       connection-timeout: 30000
       maximum-pool-size: 5
+      data-source-properties:
+        prepareThreshold: 0                    # 👈 add this
+        preparedStatementCacheQueries: 0       # 👈 add this
 
   jpa:
     hibernate:
