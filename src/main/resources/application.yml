@@ -65,3 +65,4 @@ logging:
     com.zaxxer.hikari: DEBUG
     org.hibernate: DEBUG
     org.postgresql: DEBUG
+    org.springframework.security: DEBUG
