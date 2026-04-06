@@ -5,6 +5,7 @@ import com.gatedcommunity.backend.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -33,10 +34,12 @@ public class SecurityConfig {
         return http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .csrf(AbstractHttpConfigurer::disable)
-                // ✅ add these two lines for H2 console frames
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/auth/test").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/test").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
@@ -47,9 +50,9 @@ public class SecurityConfig {
                         .requestMatchers("/webjars/**").permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/properties/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/invoices/admin/**").hasRole("ADMIN")       // ✅ admin only
-                        .requestMatchers("/api/invoices/resident/**").authenticated()      // ✅ any logged in
-                        .requestMatchers("/api/payments/**").authenticated()// ✅ any logged in
+                        .requestMatchers("/api/invoices/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/invoices/resident/**").authenticated()
+                        .requestMatchers("/api/payments/**").authenticated()
                         .requestMatchers("/api/visitors/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/visitors/gate/**").authenticated()
                         .requestMatchers("/api/visitors/resident/**").authenticated()
@@ -67,8 +70,8 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService); // ✅ constructor only
-        provider.setPasswordEncoder(passwordEncoder()); // ✅ this setter still exists
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
+        provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
 
