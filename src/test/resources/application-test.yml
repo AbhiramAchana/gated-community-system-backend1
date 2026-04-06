@@ -1,0 +1,54 @@
+server:
+  port: 8081  # Different port for tests
+
+spring:
+  application:
+    name: backend-test
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: test@example.com
+    password: "test-password"
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/gated_community_test
+    username: test_user
+    password: test_password
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 5
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop  # Recreate schema for each test
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        default_schema: public
+
+razorpay:
+  key-id: rzp_test_dummy
+  key-secret: dummy_secret
+
+jwt:
+  secret: test-secret-key-for-jwt-token-generation-in-tests-only
+  expiration: 3600000  # 1 hour for tests
+
+frontend:
+  url: http://localhost:5173
+
+logging:
+  level:
+    org.springframework.web: WARN
+    com.gatedcommunity.backend: INFO
+    org.hibernate: WARN
