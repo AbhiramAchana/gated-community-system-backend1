@@ -13,6 +13,11 @@ public class AuthController {
 
     private final AuthService authService;
 
+    @GetMapping("/test")
+    public ResponseEntity<String> test() {
+        return ResponseEntity.ok("Backend is working!");
+    }
+
     @PostMapping("/register")
     public ResponseEntity<AuthDTO.AuthResponse> register(@RequestBody AuthDTO.RegisterRequest request) {
         return ResponseEntity.ok(authService.register(request));  // ✅ AuthDTO.RegisterRequest
