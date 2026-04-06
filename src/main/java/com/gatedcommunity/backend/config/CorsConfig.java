@@ -1,6 +1,5 @@
 package com.gatedcommunity.backend.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -12,22 +11,15 @@ import java.util.List;
 @Configuration
 public class CorsConfig {
 
-    @Value("${frontend.url}")
-    private String frontendUrl;
-
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of(
-                frontendUrl,
-                "http://localhost:5173",
-                "https://localhost:5173"
-        ));
+        config.setAllowedOriginPatterns(List.of("*"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
-        config.setMaxAge(3600L);
-        config.setAllowCredentials(true);
+        config.setAllowCredentials(false);
         config.setExposedHeaders(List.of("Authorization"));
+        config.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
