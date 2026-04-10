@@ -166,6 +166,6 @@ This project is part of an academic capstone project.
 
 ## 🔗 Links
 
-- **Frontend Repository**: [[Link to frontend repo]](https://github.com/AbhiramAchana/gated-community-system-frontend1)
-- **Live Demo**: [[Your Vercel URL]](https://gated-community-system-frontend1.vercel.app/)
+- **Frontend Repository**: [(https://github.com/AbhiramAchana/gated-community-system-frontend1)]
+- **Live Demo**: [(https://gated-community-system-frontend1.vercel.app/)]
 
