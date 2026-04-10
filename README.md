@@ -162,10 +162,10 @@ This project is part of an academic capstone project.
 
 ## 👥 Authors
 
-- Your Name - [(https://github.com/AbhiramAchana)]
+- Your Name - [AbhiramAchana](https://github.com/AbhiramAchana)
 
 ## 🔗 Links
 
-- **Frontend Repository**: [(https://github.com/AbhiramAchana/gated-community-system-frontend1)]
-- **Live Demo**: [(https://gated-community-system-frontend1.vercel.app/)]
+- **Frontend Repository**: [FrontEnd Repository](https://github.com/AbhiramAchana/gated-community-system-frontend1)
+- **Live Demo**: [Live Website](https://gated-community-system-frontend1.vercel.app/)
 
