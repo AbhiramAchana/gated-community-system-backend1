@@ -162,10 +162,10 @@ This project is part of an academic capstone project.
 
 ## 👥 Authors
 
-- Your Name - [GitHub](https://github.com/yourusername)
+- Your Name - [(https://github.com/AbhiramAchana)]
 
 ## 🔗 Links
 
-- **Frontend Repository**: [Link to frontend repo]
-- **Live Demo**: [Your Vercel URL]
-- **API Documentation**: [Your Railway URL]/swagger-ui.html
+- **Frontend Repository**: [[Link to frontend repo]](https://github.com/AbhiramAchana/gated-community-system-frontend1)
+- **Live Demo**: [[Your Vercel URL]](https://gated-community-system-frontend1.vercel.app/)
+
