@@ -1,75 +1,171 @@
-# Backend - Gated Community Management System
+# Gated Community Management System - Backend
 
-## Setup for Local Development
+> Spring Boot REST API for managing gated community operations including property management, invoice generation, payment processing, visitor tracking, and facility booking.
 
-### 1. Configure Environment Variables
+[![Java](https://img.shields.io/badge/Java-17-orange.svg)](https://www.oracle.com/java/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue.svg)](https://www.postgresql.org/)
 
-Copy the example environment file:
+## 🚀 Features
+
+- **Authentication & Authorization**: JWT-based auth with role-based access control (Admin, Resident, Gate Security)
+- **Property Management**: CRUD operations for properties with owner/tenant assignments
+- **Invoice & Payments**: Automated billing with Razorpay payment gateway integration
+- **Visitor Management**: Pre-approval system with check-in/check-out tracking
+- **Complaint System**: Multi-status complaint tracking with admin responses
+- **Facility Booking**: Community facility reservation with time slot management
+- **Real-time Notifications**: WebSocket integration for live updates
+- **Staff Management**: Employee records and attendance tracking
+- **Email Notifications**: Automated emails for important events
+
+## 🛠️ Tech Stack
+
+- **Framework**: Spring Boot 3.x
+- **Security**: Spring Security + JWT
+- **Database**: PostgreSQL (Supabase)
+- **ORM**: Hibernate/JPA
+- **Payment**: Razorpay API
+- **Real-time**: WebSocket (STOMP)
+- **Documentation**: Swagger/OpenAPI
+- **Build Tool**: Maven
+
+## 📋 Prerequisites
+
+- Java 17 or higher
+- Maven 3.6+
+- PostgreSQL database (or Supabase account)
+- Razorpay account (test keys)
+- Gmail account (for email notifications)
+
+## ⚙️ Local Development Setup
+
+### 1. Clone the Repository
+
+```bash
+git clone <your-backend-repo-url>
+cd backend
+```
+
+### 2. Configure Environment Variables
+
+Copy the example file:
 ```bash
 cp .env.example .env.local
 ```
 
-Edit `.env.local` and fill in your actual credentials:
-- Database credentials (Supabase)
-- Email credentials (Gmail)
-- Razorpay keys
-- JWT secret
+Edit `.env.local` with your credentials:
+```env
+SPRING_DATASOURCE_URL=jdbc:postgresql://your-db-host:5432/postgres
+SPRING_DATASOURCE_USERNAME=your-username
+SPRING_DATASOURCE_PASSWORD=your-password
 
-### 2. Run the Application
+SPRING_MAIL_USERNAME=your-email@gmail.com
+SPRING_MAIL_PASSWORD=your-app-password
 
-#### Option A: Using Maven with Environment Variables
+RAZORPAY_KEY_ID=rzp_test_xxxxx
+RAZORPAY_KEY_SECRET=your-secret
 
-**Windows (PowerShell):**
-```powershell
-# Load environment variables from .env.local
-Get-Content .env.local | ForEach-Object {
-    if ($_ -match '^([^=]+)=(.*)$') {
-        [Environment]::SetEnvironmentVariable($matches[1], $matches[2], 'Process')
-    }
-}
+JWT_SECRET=your-256-bit-secret
+FRONTEND_URL=http://localhost:5173
+```
 
-# Run the application
+### 3. Run the Application
+
+**Using Maven:**
+```bash
 ./mvnw spring-boot:run
 ```
 
-**Linux/Mac (Bash):**
+**Using IntelliJ IDEA:**
+1. Open project in IntelliJ
+2. Install EnvFile plugin
+3. Edit Run Configuration → Add `.env.local`
+4. Run `BackendApplication`
+
+### 4. Verify Setup
+
+- **API Health**: http://localhost:8080/api/test
+- **Swagger UI**: http://localhost:8080/swagger-ui.html
+- **API Docs**: http://localhost:8080/v3/api-docs
+
+## 🧪 Testing
+
+Run unit and integration tests:
 ```bash
-# Load environment variables and run
-export $(cat .env.local | xargs) && ./mvnw spring-boot:run
+./mvnw test
 ```
 
-#### Option B: Using IDE (IntelliJ IDEA / Eclipse)
+## 📦 Build for Production
 
-1. Install EnvFile plugin (IntelliJ) or similar
-2. Configure run configuration to load `.env.local`
-3. Run the application
+```bash
+./mvnw clean package -DskipTests
+```
 
-### 3. Verify Application is Running
+The JAR file will be in `target/backend-0.0.1-SNAPSHOT.jar`
 
-Open browser and go to:
-- API: http://localhost:8080/api/test
-- Swagger UI: http://localhost:8080/swagger-ui.html
+## 🌐 Deployment
 
-## Production Deployment
+### Railway (Recommended)
 
-For production deployment, environment variables should be set in your hosting platform:
-- Railway: Set in Variables tab
-- AWS: Set in Elastic Beanstalk environment
-- Docker: Pass via docker-compose.yml or -e flags
+1. Connect your GitHub repo to Railway
+2. Set environment variables in Railway dashboard
+3. Railway auto-deploys on push to main branch
 
-See `../DEPLOYMENT_GUIDE.md` for detailed instructions.
+### Docker
 
-## Security Notes
+```bash
+docker build -t gated-community-backend .
+docker run -p 8080:8080 --env-file .env.local gated-community-backend
+```
 
-⚠️ **NEVER commit the following files:**
-- `.env.local` - Contains your actual credentials
-- `application-local.yml` - If you create one with credentials
+## 📚 API Documentation
 
-✅ **Safe to commit:**
-- `.env.example` - Template without real values
-- `application.yml` - Uses environment variables
-- `application-prod.yml` - Uses environment variables
+Once running, access interactive API docs at:
+- **Swagger UI**: http://localhost:8080/swagger-ui.html
 
-## Environment Variables Reference
+### Key Endpoints
 
-See `.env.example` for all required environment variables.
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/auth/login` | POST | User login |
+| `/api/auth/register` | POST | User registration |
+| `/api/properties/admin/all` | GET | Get all properties |
+| `/api/invoices/resident/{id}` | GET | Get resident invoices |
+| `/api/payments/create-order` | POST | Create Razorpay order |
+| `/api/visitors/gate/all` | GET | Get all visitors |
+| `/api/complaints/resident/create` | POST | Submit complaint |
+
+## 🔒 Security
+
+- JWT tokens expire after 24 hours
+- Passwords hashed with BCrypt
+- CORS configured for frontend domain
+- Role-based endpoint protection
+- SQL injection prevention via JPA
+
+⚠️ **Never commit:**
+- `.env.local`
+- `application-local.yml`
+- Any file with real credentials
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open Pull Request
+
+## 📄 License
+
+This project is part of an academic capstone project.
+
+## 👥 Authors
+
+- Your Name - [GitHub](https://github.com/yourusername)
+
+## 🔗 Links
+
+- **Frontend Repository**: [Link to frontend repo]
+- **Live Demo**: [Your Vercel URL]
+- **API Documentation**: [Your Railway URL]/swagger-ui.html
